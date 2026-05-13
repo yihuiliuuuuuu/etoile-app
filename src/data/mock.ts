@@ -1,46 +1,45 @@
-import { colors } from '@/src/theme';
-import { ClassesSummary } from '@/src/types';
+import { HomeSnapshot } from '@/src/types';
 
 /**
- * Local mock data used while the app has no backend wired up.
- * Numbers and dates match the design reference and will be replaced
- * once a real data source is connected.
+ * Local mock data used while the app has no backend wired up. Replace
+ * this single file with a real data source and the UI will keep working.
  */
-export const classesSummary: ClassesSummary = {
-  monthLabel: 'May',
-  monthShort: 'May',
-  monthValue: 8,
-  yearLabel: '2026',
-  yearValue: 35,
-  yearGoal: 100,
-  monthlyActivity: [
-    { month: 'February', shortMonth: 'Feb', value: 7 },
-    { month: 'March', shortMonth: 'Mar', value: 9 },
-    { month: 'April', shortMonth: 'Apr', value: 11 },
-    { month: 'May', shortMonth: 'May', value: 8 },
-  ],
-  studios: [
-    { id: 'dock-11', name: 'Dock 11 (Most)', color: colors.chart.blue, classes: 14 },
-    { id: 'fit-ballet', name: "Fit' Ballet", color: colors.chart.green, classes: 8 },
-    {
-      id: 'center-of-dance',
-      name: 'Center of Dance',
-      color: colors.chart.orange,
-      classes: 7,
-    },
-    { id: 'papillon', name: 'Papillon', color: colors.chart.pink, classes: 4 },
-    {
-      id: 'house-of-healing',
-      name: 'House of Healing',
-      color: colors.chart.purple,
-      classes: 2,
-    },
-  ],
-  nextClass: {
-    id: 'next-1',
-    studio: 'Monthly Classes',
-    title: 'Monthly Classes',
-    // June 12, 2026 at 10:00 local time
-    startsAt: new Date(2026, 5, 12, 10, 0),
+export const homeSnapshot: HomeSnapshot = {
+  user: {
+    firstName: 'Émilie',
+    initials: 'EM',
+    avatarUri:
+      'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=160&q=80&auto=format&fit=crop',
+  },
+  goalMinutesPerDay: 60,
+  today: {
+    minutes: 42,
+    goalMinutes: 60,
+    focusLabel: "Today's focus",
+    detail: 'Adagio · Centre work',
+  },
+  week: {
+    streak: 5,
+    days: [
+      { date: '2026-05-04', minutes: 55 },
+      { date: '2026-05-05', minutes: 30 },
+      { date: '2026-05-06', minutes: 65 },
+      { date: '2026-05-07', minutes: 45 },
+      { date: '2026-05-08', minutes: 50 },
+      { date: '2026-05-09', minutes: 0 },
+      { date: '2026-05-10', minutes: 42 },
+    ],
   },
 };
+
+/**
+ * Daily greeting based on the local hour. Kept here so screens stay
+ * presentational and easy to swap to a real i18n / data source later.
+ */
+export function greetingForHour(hour: number): string {
+  if (hour < 5) return 'Still dancing';
+  if (hour < 12) return 'Good morning';
+  if (hour < 17) return 'Good afternoon';
+  if (hour < 21) return 'Good evening';
+  return 'Bonne nuit';
+}

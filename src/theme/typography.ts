@@ -3,77 +3,105 @@ import { TextStyle } from 'react-native';
 /**
  * Font families.
  *
- * Loaded asynchronously in `app/_layout.tsx`. Until the fonts load we
- * fall back to the platform defaults so first paint still looks clean.
+ * Headlines use Playfair Display for an editorial / ballet feel, with the
+ * italic cut reserved for soft phrases like the greeting. Body and UI text
+ * use Manrope which reads as warmer and rounder than typical UI sans.
+ *
+ * Loaded asynchronously in `app/_layout.tsx`. Until the fonts load we fall
+ * back to the platform defaults so the first paint still looks clean.
  */
 export const fonts = {
-  serif: 'PlayfairDisplay_700Bold',
-  serifItalic: 'PlayfairDisplay_700Bold_Italic',
-  sans: 'Inter_400Regular',
-  sansMedium: 'Inter_500Medium',
-  sansSemibold: 'Inter_600SemiBold',
-  sansBold: 'Inter_700Bold',
+  serif: 'PlayfairDisplay_500Medium',
+  serifBold: 'PlayfairDisplay_700Bold',
+  serifItalic: 'PlayfairDisplay_500Medium_Italic',
+  sans: 'Manrope_400Regular',
+  sansMedium: 'Manrope_500Medium',
+  sansSemibold: 'Manrope_600SemiBold',
+  sansBold: 'Manrope_700Bold',
 } as const;
 
 type Variant = TextStyle;
 
 export const typography: Record<
   | 'displaySerif'
-  | 'sectionTitleSerif'
+  | 'titleSerif'
+  | 'subtitleSerifItalic'
   | 'sectionTitle'
   | 'cardLabel'
-  | 'metricLarge'
-  | 'metricMedium'
+  | 'eyebrow'
+  | 'metricXL'
+  | 'metricL'
+  | 'metricM'
   | 'body'
   | 'bodyMuted'
   | 'caption'
-  | 'tabLabel',
+  | 'tabLabel'
+  | 'button',
   Variant
 > = {
   displaySerif: {
-    fontFamily: fonts.serif,
-    fontSize: 44,
-    lineHeight: 48,
-    letterSpacing: -0.5,
+    fontFamily: fonts.serifBold,
+    fontSize: 36,
+    lineHeight: 40,
+    letterSpacing: -0.3,
   },
-  sectionTitleSerif: {
-    fontFamily: fonts.serif,
-    fontSize: 24,
-    lineHeight: 28,
+  titleSerif: {
+    fontFamily: fonts.serifBold,
+    fontSize: 26,
+    lineHeight: 30,
+    letterSpacing: -0.2,
+  },
+  subtitleSerifItalic: {
+    fontFamily: fonts.serifItalic,
+    fontSize: 18,
+    lineHeight: 22,
   },
   sectionTitle: {
     fontFamily: fonts.sansSemibold,
-    fontSize: 17,
-    lineHeight: 22,
-    letterSpacing: -0.2,
+    fontSize: 16,
+    lineHeight: 20,
+    letterSpacing: -0.1,
   },
   cardLabel: {
     fontFamily: fonts.sansMedium,
     fontSize: 13,
     lineHeight: 16,
-    letterSpacing: 0.1,
+    letterSpacing: 0.2,
   },
-  metricLarge: {
-    fontFamily: fonts.sansBold,
-    fontSize: 48,
-    lineHeight: 52,
-    letterSpacing: -1.2,
+  eyebrow: {
+    fontFamily: fonts.sansSemibold,
+    fontSize: 11,
+    lineHeight: 14,
+    letterSpacing: 1.6,
+    textTransform: 'uppercase',
   },
-  metricMedium: {
-    fontFamily: fonts.sansBold,
+  metricXL: {
+    fontFamily: fonts.serifBold,
+    fontSize: 56,
+    lineHeight: 60,
+    letterSpacing: -1.5,
+  },
+  metricL: {
+    fontFamily: fonts.serifBold,
     fontSize: 36,
     lineHeight: 40,
     letterSpacing: -0.8,
   },
+  metricM: {
+    fontFamily: fonts.sansBold,
+    fontSize: 22,
+    lineHeight: 26,
+    letterSpacing: -0.3,
+  },
   body: {
     fontFamily: fonts.sans,
     fontSize: 15,
-    lineHeight: 20,
+    lineHeight: 22,
   },
   bodyMuted: {
     fontFamily: fonts.sansMedium,
     fontSize: 14,
-    lineHeight: 18,
+    lineHeight: 20,
   },
   caption: {
     fontFamily: fonts.sansMedium,
@@ -85,6 +113,12 @@ export const typography: Record<
     fontFamily: fonts.sansMedium,
     fontSize: 11,
     lineHeight: 14,
-    letterSpacing: 0.1,
+    letterSpacing: 0.2,
+  },
+  button: {
+    fontFamily: fonts.sansSemibold,
+    fontSize: 14,
+    lineHeight: 18,
+    letterSpacing: 0.2,
   },
 };

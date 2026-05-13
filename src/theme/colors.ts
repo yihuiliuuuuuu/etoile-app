@@ -1,43 +1,52 @@
 /**
  * Étoile color palette.
  *
- * Inspired by editorial dance photography: paper-white surfaces with
- * a single saturated red accent and neutral typography tones.
+ * A soft, feminine wellness aesthetic: warm ivory canvas, dusty rose
+ * primary, a muted gold for accents, and aubergine-tinted neutrals for
+ * type. Designed to feel calm and premium rather than loud.
  */
 export const colors = {
   // Brand
-  accent: '#FF3B12',
-  accentPressed: '#E0320C',
-  accentSoft: '#FFEDE6',
+  primary: '#B47882', // dusty rose
+  primaryPressed: '#9A5F6B',
+  primarySoft: '#F5E0DF', // blush wash for fills
+  primaryDeep: '#6E3F49', // CTAs on light surfaces
+
+  // Secondary highlights
+  gold: '#C9A66B',
+  lavender: '#C9BDDB',
+  sage: '#A8B79C',
 
   // Surfaces
-  background: '#EFEFF1',
+  background: '#FAF6F2', // warm ivory canvas
   surface: '#FFFFFF',
-  surfaceMuted: '#F6F6F8',
-  divider: 'rgba(0,0,0,0.06)',
+  surfaceAlt: '#F2EAE6', // blush card variant
+  surfaceMuted: '#F6EFEB',
+  divider: 'rgba(42, 31, 34, 0.06)',
 
   // Text
-  textPrimary: '#0A0A0A',
-  textSecondary: '#6E6E73',
-  textTertiary: '#9A9AA0',
-  textOnAccent: '#FFFFFF',
+  textPrimary: '#2A1F22', // warm aubergine-black
+  textSecondary: '#6B5660',
+  textTertiary: '#A89299',
+  textOnPrimary: '#FFFFFF',
 
-  // Chart palette (Studios)
+  // States
+  success: '#7B9E7E',
+  warning: '#D4A862',
+
+  // Chart palette
   chart: {
-    blue: '#2F7BFF',
-    green: '#1FB36F',
-    orange: '#FF8A1F',
-    pink: '#FF6BA1',
-    purple: '#8A5BFF',
-    track: '#E5E5EA',
+    rose: '#B47882',
+    blush: '#E4B7B2',
+    gold: '#C9A66B',
+    lavender: '#C9BDDB',
+    sage: '#A8B79C',
+    track: '#EFE6E2',
   },
 
-  // Tab bar
+  // Tab bar / shadows
   tabBar: '#FFFFFF',
-  tabBarBorder: 'rgba(0,0,0,0.04)',
-
-  // Shadow
-  shadow: '#000000',
+  shadow: '#2A1F22',
 } as const;
 
 export type AppColors = typeof colors;

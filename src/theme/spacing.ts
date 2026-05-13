@@ -7,11 +7,13 @@ export const spacing = {
   xl: 20,
   xxl: 24,
   xxxl: 32,
+  xxxxl: 40,
 } as const;
 
 export const radii = {
   sm: 8,
   md: 14,
   lg: 22,
+  xl: 28,
   pill: 999,
 } as const;

@@ -1,38 +1,31 @@
-export type StudioId =
-  | 'dock-11'
-  | 'fit-ballet'
-  | 'center-of-dance'
-  | 'papillon'
-  | 'house-of-healing';
-
-export interface Studio {
-  id: StudioId;
-  name: string;
-  color: string;
-  classes: number;
+export interface UserProfile {
+  firstName: string;
+  initials: string;
+  avatarUri?: string;
 }
 
-export interface UpcomingClass {
-  id: string;
-  studio: string;
-  title: string;
-  startsAt: Date;
+export interface DailyPractice {
+  date: string;
+  minutes: number;
 }
 
-export interface MonthBucket {
-  month: string;
-  shortMonth: string;
-  value: number;
+export interface TodayPractice {
+  minutes: number;
+  goalMinutes: number;
+  focusLabel: string;
+  detail: string;
 }
 
-export interface ClassesSummary {
-  monthLabel: string;
-  monthShort: string;
-  monthValue: number;
-  yearLabel: string;
-  yearValue: number;
-  yearGoal: number;
-  monthlyActivity: MonthBucket[];
-  studios: Studio[];
-  nextClass: UpcomingClass;
+export interface WeekSummary {
+  /** 7 entries, Monday → Sunday. */
+  days: DailyPractice[];
+  /** Length of the current consecutive-day practice streak. */
+  streak: number;
+}
+
+export interface HomeSnapshot {
+  user: UserProfile;
+  today: TodayPractice;
+  week: WeekSummary;
+  goalMinutesPerDay: number;
 }

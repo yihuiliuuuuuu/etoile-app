@@ -2,28 +2,32 @@ import { Platform, ViewStyle } from 'react-native';
 
 import { colors } from './colors';
 
-export const shadows: { card: ViewStyle; fab: ViewStyle } = {
+/**
+ * Soft, low-opacity shadows. The "card" shadow has a faint warm tint so
+ * white cards lift gently off the ivory canvas without looking harsh.
+ */
+export const shadows: { card: ViewStyle; raised: ViewStyle } = {
   card: Platform.select({
     ios: {
       shadowColor: colors.shadow,
-      shadowOpacity: 0.06,
-      shadowOffset: { width: 0, height: 4 },
-      shadowRadius: 14,
+      shadowOpacity: 0.05,
+      shadowOffset: { width: 0, height: 6 },
+      shadowRadius: 18,
     },
     android: {
-      elevation: 2,
+      elevation: 1,
     },
     default: {},
   }) as ViewStyle,
-  fab: Platform.select({
+  raised: Platform.select({
     ios: {
-      shadowColor: colors.accent,
-      shadowOpacity: 0.35,
-      shadowOffset: { width: 0, height: 8 },
-      shadowRadius: 16,
+      shadowColor: colors.primary,
+      shadowOpacity: 0.2,
+      shadowOffset: { width: 0, height: 10 },
+      shadowRadius: 20,
     },
     android: {
-      elevation: 8,
+      elevation: 4,
     },
     default: {},
   }) as ViewStyle,
