@@ -1,66 +1,88 @@
-import { ScrollView, StyleSheet, View } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useRouter } from 'expo-router';
+import { useMemo } from 'react';
+import { View } from 'react-native';
 
-import { MonthlyActivityCard } from '@/src/components/cards/MonthlyActivityCard';
-import { NextClassCard } from '@/src/components/cards/NextClassCard';
-import { StudiosAttendedCard } from '@/src/components/cards/StudiosAttendedCard';
-import { YearlyGoalCard } from '@/src/components/cards/YearlyGoalCard';
-import { ScreenHeader } from '@/src/components/ScreenHeader';
-import { classesSummary } from '@/src/data/mock';
-import { colors, spacing } from '@/src/theme';
+import { Greeting } from '@/src/components/Greeting';
+import { QuickActions, QuickAction } from '@/src/components/QuickActions';
+import { ScreenContainer } from '@/src/components/ScreenContainer';
+import { SectionTitle } from '@/src/components/SectionTitle';
+import { TodaysPracticeCard } from '@/src/components/TodaysPracticeCard';
+import { WeeklyProgress, DayProgress } from '@/src/components/WeeklyProgress';
+import { greetingForHour, homeSnapshot } from '@/src/data/mock';
+import { spacing } from '@/src/theme';
 
-export default function ClassesScreen() {
-  const insets = useSafeAreaInsets();
-  const summary = classesSummary;
+const DAY_LABELS = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
+
+export default function HomeScreen() {
+  const router = useRouter();
+  const snapshot = homeSnapshot;
+  const salutation = useMemo(() => greetingForHour(new Date().getHours()), []);
+
+  const weekDays: DayProgress[] = snapshot.week.days.map((day, idx) => ({
+    label: DAY_LABELS[idx] ?? '',
+    minutes: day.minutes,
+    isToday: idx === snapshot.week.days.length - 1,
+  }));
+
+  const totalMinutes = snapshot.week.days.reduce((sum, d) => sum + d.minutes, 0);
+
+  const actions: QuickAction[] = [
+    {
+      id: 'log',
+      label: 'Log practice',
+      icon: 'create-outline',
+      onPress: () => router.push('/log'),
+    },
+    {
+      id: 'note',
+      label: 'Add note',
+      icon: 'bookmark-outline',
+      onPress: () => router.push('/log'),
+    },
+    {
+      id: 'progress',
+      label: 'View progress',
+      icon: 'stats-chart-outline',
+      onPress: () => router.push('/progress'),
+    },
+  ];
 
   return (
-    <View style={styles.root}>
-      <ScrollView
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={[
-          styles.scrollContent,
-          { paddingBottom: 140 + insets.bottom },
-        ]}
-        stickyHeaderIndices={[]}
-      >
-        <ScreenHeader title="Classes" />
+    <ScreenContainer bottomInset={96}>
+      <Greeting
+        salutation={salutation}
+        name={snapshot.user.firstName}
+        avatarUri={snapshot.user.avatarUri}
+        initials={snapshot.user.initials}
+      />
 
-        <View style={styles.cardStack}>
-          <YearlyGoalCard
-            monthValue={summary.monthValue}
-            monthLabel={summary.monthLabel}
-            yearValue={summary.yearValue}
-            yearLabel={summary.yearLabel}
-            goal={summary.yearGoal}
-            unit="classes"
-          />
+      <TodaysPracticeCard
+        minutes={snapshot.today.minutes}
+        goalMinutes={snapshot.today.goalMinutes}
+        focus={snapshot.today.focusLabel}
+        detail={snapshot.today.detail}
+        onContinue={() => router.push('/log')}
+      />
 
-          <NextClassCard upcoming={summary.nextClass} />
+      <View style={{ gap: spacing.md }}>
+        <SectionTitle
+          title="Weekly progress"
+          subtitle="Five days in a row — keep the line."
+          action="See all"
+          onActionPress={() => router.push('/progress')}
+        />
+        <WeeklyProgress
+          days={weekDays}
+          goalMinutes={snapshot.goalMinutesPerDay}
+          totalMinutes={totalMinutes}
+          streak={snapshot.week.streak}
+        />
+      </View>
 
-          <MonthlyActivityCard
-            buckets={summary.monthlyActivity}
-            currentLabel={summary.monthShort}
-            currentValue={summary.monthValue}
-          />
-
-          <StudiosAttendedCard studios={summary.studios} />
-        </View>
-      </ScrollView>
-    </View>
+      <View style={{ gap: spacing.md }}>
+        <SectionTitle title="Quick actions" />
+        <QuickActions actions={actions} />
+      </View>
+    </ScreenContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  root: {
-    flex: 1,
-    backgroundColor: colors.background,
-  },
-  scrollContent: {
-    paddingBottom: spacing.xxxl,
-  },
-  cardStack: {
-    paddingHorizontal: spacing.lg,
-    marginTop: -spacing.xxl,
-    gap: spacing.md,
-  },
-});
