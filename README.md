@@ -1,1 +1,1 @@
-# etoile-app
+# Étoile
