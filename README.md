@@ -3,13 +3,25 @@
 A premium ballet & dance practice tracker for iOS and Android, built with
 **Expo**, **React Native** and **TypeScript**.
 
-The current build implements the editorial "Classes" home screen from the
-design reference: a hero header, a yearly-goal card with progress, the next
-class, monthly activity, and a stacked breakdown of studios attended. A
-second `Practice` tab tracks practice hours.
+The aesthetic is soft and editorial: warm ivory canvas, dusty-rose
+accents, gold highlights, Playfair Display serif headlines paired with
+Manrope sans for UI. Designed to feel calm and personal rather than
+gamified.
 
-All data is mocked locally in `src/data/mock.ts` so the UI runs without any
-backend.
+## Screens
+
+- **Home** — italic-serif greeting + avatar, *Today's Practice* hero
+  card with a gradient progress ring, *Weekly Progress* mini-chart with
+  streak pill, and a three-up quick actions row (Log practice / Add
+  note / View progress).
+- **Log** — three-up list of capture options and a warm-up CTA.
+- **Progress** — weekly ring, the weekly chart in full, and key stats
+  (this month, best streak).
+- **Profile** — avatar header, a saved quote in the soft card variant,
+  and a settings list (daily goal, reminders, theme, support, sign out).
+
+All data is mocked locally in `src/data/mock.ts` so the UI runs without
+any backend.
 
 ## Project layout
 
@@ -17,15 +29,27 @@ backend.
 app/                          Expo Router routes
 ├── _layout.tsx               Root stack + font loading + safe areas
 └── (tabs)/
-    ├── _layout.tsx           Custom bottom tab bar
-    ├── index.tsx             Classes (Home) screen
-    └── practice.tsx          Practice screen
+    ├── _layout.tsx           Bottom tabs: Home / Log / Progress / Profile
+    ├── index.tsx             Home screen
+    ├── log.tsx               Log entry options
+    ├── progress.tsx          Weekly progress overview
+    └── profile.tsx           Profile + settings
 
 src/
-├── components/               Reusable UI primitives (Card, ProgressBar, …)
-│   └── cards/                Composed dashboard cards
-├── data/                     Local mock data
-├── theme/                    Colors, spacing, typography, shadows
+├── components/
+│   ├── AppText.tsx           Typed Text using the typography scale
+│   ├── Avatar.tsx
+│   ├── Card.tsx              surface / soft / primary variants
+│   ├── Greeting.tsx          Italic serif salutation + name + avatar
+│   ├── PracticeRing.tsx      Gradient SVG progress ring
+│   ├── PrimaryButton.tsx     Pill button (solid / outline / ghost)
+│   ├── QuickActions.tsx      Three-up action tile row
+│   ├── ScreenContainer.tsx   Safe-area + scroll boilerplate
+│   ├── SectionTitle.tsx
+│   ├── TodaysPracticeCard.tsx
+│   └── WeeklyProgress.tsx    7-day mini chart with streak pill
+├── data/mock.ts              Local mock HomeSnapshot
+├── theme/                    colors, spacing, radii, typography, shadows
 └── types/                    Shared TypeScript models
 
 assets/                       Icons and splash images
@@ -41,6 +65,7 @@ assets/                       Icons and splash images
    ```bash
    git clone https://github.com/yihuiliuuuuuu/etoile-app.git
    cd etoile-app
+   git checkout cursor/create-etoile-expo-app-f5aa
    npm install
    ```
 
@@ -51,7 +76,7 @@ assets/                       Icons and splash images
    ```
 
    This opens the Expo CLI in your terminal and a developer page in the
-   browser, with a QR code.
+   browser with a QR code.
 
 3. **Open the app in Expo Go**
 
@@ -82,15 +107,16 @@ assets/                       Icons and splash images
 | `npm run typecheck` | Run the TypeScript compiler in `--noEmit`     |
 | `npm run lint`      | Run ESLint with the Expo ruleset              |
 
-## Notes on the design
+## Design notes
 
-- **Fonts**: editorial titles use *Playfair Display* (Bold) and the rest
-  of the UI uses *Inter*. Both are loaded asynchronously through
-  `@expo-google-fonts/*` so the bundle stays small.
-- **Color**: a single saturated red (`#FF3B12`) is used as the only
-  accent against neutral surfaces, in line with the reference.
-- **Layout**: cards sit on a soft gray canvas with subtle shadows; the
-  bottom tab bar is a compact pill paired with a floating "+" button.
-- **No backend yet**: every metric on screen comes from
-  `src/data/mock.ts`, so it is safe to tweak values and immediately see
-  the effect.
+- **Fonts**: *Playfair Display* (medium / bold / italic) for editorial
+  headlines and metrics; *Manrope* for UI and body. Both are loaded
+  lazily through `@expo-google-fonts/*` + `expo-font` so first paint
+  stays fast.
+- **Color**: a single dusty-rose primary (`#B47882`) with soft blush
+  fills, warm aubergine type, and a muted gold used sparingly (e.g. the
+  ring gradient).
+- **Shadows**: low-opacity, warm-tinted shadows lift cards gently off
+  the ivory canvas without looking harsh.
+- **No backend yet**: everything on screen reads from `src/data/mock.ts`.
+  Swap that file with a real data source and the components keep working.
